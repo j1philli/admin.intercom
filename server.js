@@ -20,26 +20,40 @@ const listener = app.listen(process.env.PORT, () => {
 });
 
 const networks = [
-    "discordgo",
-    "facebook",
-    "facebookgo",
-    "gmessages",
-    "googlechat",
-    "hungryserv",
-    "imessagecloud",
-    "imessagego",
-    "instagram",
-    "instagramgo",
-    "irc",
-    "linkedin",
-    "signal",
-    "slackgo",
-    "telegram",
-    "twitter",
-    "whatsapp",
-    "androidsms",
+    {name: 'discordgo', bridgeState: "Running", remoteState: ""},
+    {name: "facebook", bridgeState: "", remoteState: ""},
+    {name: "facebookgo", bridgeState: "Running", remoteState: "Connected"},
+    {name: "gmessages", bridgeState: "Running", remoteState: "Connected"},
+    {name: "googlechat",  bridgeState: "Running", remoteState: ""},
+    {name: "hungryserv", bridgeState: "Running", remoteState: ""},
+    {name: "imessagecloud", bridgeState: "", remoteState: ""},
+    {name: "imessagego", bridgeState: "Running", remoteState: "Connected"},
+    {name: "instagram", bridgeState: "", remoteState: ""},
+    {name: "instagramgo", bridgeState: "Running", remoteState: ""},
+    {name: "irc", bridgeState: "", remoteState: ""},
+    {name: "linkedin", bridgeState: "Running", remoteState: ""},
+    {name: "signal", bridgeState: "Running", remoteState: ""},
+    {name: "slackgo", bridgeState: "", remoteState: ""},
+    {name: "telegram", bridgeState: "Running", remoteState: ""},
+    {name: "twitter", bridgeState: "", remoteState: ""},
+    {name: "whatsapp", bridgeState: "Running", remoteState: ""},
+    {name: "androidsms", bridgeState: "Running", remoteState: "Connected"},
     ];
 
+const chatnetworks = networks.map(network => ({
+    ...network,
+    type: "item",
+    id: network.name,
+    title: network.name,
+    subtitle: network.bridgeState,
+    tertiary_text: network.bridgeState,
+    image: "https://avatars.githubusercontent.com/u/5508982?s=200&v=4",
+    image_width: 48,
+    image_height: 48,
+    action: {
+        type: "submit",
+    },
+}));
 
 /*
   This is an endpoint that Intercom will POST HTTP request when the card needs to be initialized.
@@ -54,22 +68,7 @@ app.post("/initialize", (request, response) => {
                     {
                         type: "list",
                         disabled: false,
-                        items: networks.map((name) => {
-                            return {
-                                type: "item",
-                                id: name,
-                                title: name,
-                                subtitle: "Running",
-                                tertiary_text: "Not Connected",
-                                image:
-                  "https://avatars.githubusercontent.com/u/5508982?s=200&v=4",
-                                image_width: 48,
-                                image_height: 48,
-                                action: {
-                                    type: "submit",
-                                },
-                            };
-                        }),
+                        items: chatnetworks
                     },
                     ],
             },
