@@ -53,7 +53,7 @@ const chatnetworks = networks.map(network => ({
     action: {
         type: "submit",
     },
-})).filter(network => network.bridgeState = "Running");
+})).filter(network => network.bridgeState === "Running");
 
 /*
   This is an endpoint that Intercom will POST HTTP request when the card needs to be initialized.
